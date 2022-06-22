@@ -1,0 +1,19 @@
+{
+  "name": "git-snappy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "snappy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.3.0",
+    "conf": "^10.1.2"
+  },
+  "bin": {
+    "git-snappy": "./index.js"
+  }
+}
