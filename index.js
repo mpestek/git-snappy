@@ -39,6 +39,99 @@ program
   });
 
 /**
+ * MASS STASH
+ */
+program
+  .command('stash')
+  .description('Stash all repos')
+  .action(() => {
+		exec(`ls ${mainPath}`, (error, folders, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+
+			const folderNames = folders.split('\n').filter((folderName) => folderName?.length > 0);
+
+			const promises = [];
+			folderNames.forEach((folderName) => {
+				promises.push(
+					executeCommand(`cd "${mainPath}\\${folderName}" && git stash`)
+						.catch(err => console.error(err))
+				)
+			});
+
+			Promise.all(promises).then().catch(err => console.error(err));
+		});
+  });
+
+/**
+ * MASS APPLY CONF STASH
+ */
+program
+  .command('apply-config')
+  .description('Mass apply config stash')
+  .action(() => {
+		exec(`ls ${mainPath}`, (error, folders, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+
+			const folderNames = folders.split('\n').filter((folderName) => folderName?.length > 0);
+
+			const promises = [];
+			folderNames.forEach((folderName) => {
+				promises.push(
+					executeCommand(`cd "${mainPath}\\${folderName}" && git stash apply stash^{/conf}`)
+						.catch(err => console.error(err))
+				)
+			});
+
+			Promise.all(promises).then().catch(err => console.error(err));
+		});
+  });
+
+/**
+ * PULL EN MASS
+ */
+program
+.command('pull')
+.description('Pull latest for all repos')
+.action(() => {
+	exec(`ls ${mainPath}`, (error, folders, stderr) => {
+		if (error) {
+			console.log(`error: ${error.message}`);
+			return;
+		}
+		if (stderr) {
+			console.log(`stderr: ${stderr}`);
+			return;
+		}
+
+		const folderNames = folders.split('\n').filter((folderName) => folderName?.length > 0);
+
+		const promises = [];
+		folderNames.forEach((folderName) => {
+			promises.push(
+				executeCommand(`cd "${mainPath}\\${folderName}" && git pull`)
+					.catch(err => console.error(err))
+			)
+		});
+
+		Promise.all(promises).then().catch(err => console.error(err));
+	});
+});
+
+/**
  * SHOW SNAPSHOT DETAILS
  */
 program
