@@ -91,7 +91,7 @@ program
 			const promises = [];
 			folderNames.forEach((folderName) => {
 				promises.push(
-					executeCommand(`cd "${mainPath}\\${folderName}" && git stash apply stash^{/conf}`)
+					executeCommand(`cd "${mainPath}\\${folderName}" && git stash apply conf-stash`)
 						.catch(err => console.error(err))
 				)
 			});
